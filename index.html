@@ -1,115 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weight & Amount Calculator</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            animation: fadeIn 1s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .hidden { display: none; }
-        button {
-            background: #ff7eb3;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: #ff527b;
-        }
-        footer {
-            margin-top: 20px;
-            padding: 10px;
-            text-align: center;
-            font-size: 14px;
-            color: #fff;
-            background: rgba(0, 0, 0, 0.3);
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>పసుపు లెక్కలు</title>
+  <style>
+    body {
+      background-color: #ffb6b6;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      background-color: #fff;
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      font-family: 'Noto Sans Telugu', sans-serif;
+    }
+    input[type="number"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 80%;
+      font-size: 16px;
+    }
+    button {
+      background-color: #ff6fa7;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .results {
+      margin-top: 30px;
+      font-size: 18px;
+      text-align: left;
+      padding: 10px;
+    }
+    .results strong {
+      display: inline-block;
+      width: 180px;
+    }
+    footer {
+      margin-top: 30px;
+      background-color: #7a4f4f;
+      color: white;
+      padding: 10px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">పసుపు లెక్కలు</h1>
-        <form id="calculator-form">
-            <label for="totalWeight">Total Weight (in Kgs):</label><br>
-            <input type="number" id="totalWeight" required><br><br>
-            
-            <label for="pricePerPutti">Price for 300 Kgs (1 పుట్టీ):</label><br>
-            <input type="number" id="pricePerPutti" required><br><br>
-            
-            <label for="taruvu">తరువు (deduction weight):</label><br>
-            <input type="number" id="taruvu" required><br><br>
-            
-            <button type="button" onclick="calculate()">Calculate</button>
-        </form>
-        
-        <div id="result" class="hidden">
-            <h2>Calculation Results</h2>
-            <p><strong>Total Weight:</strong> <span id="displayTotalWeight"></span> Kgs</p>
-            <p><strong>Net Weight:</strong> <span id="displayNetWeight"></span> Kgs</p>
-            <p><strong>Full పుట్టీలు:</strong> <span id="displayFullPutti"></span></p>
-            <p><strong>Remaining Weight:</strong> <span id="displayRemainingWeight"></span> Kgs</p>
-            <p><strong>Price per Kg:</strong> ₹<span id="displayPricePerKg"></span></p>
-            <p><strong>Total Amount to be Paid:</strong> ₹<span id="displayTotalAmount"></span></p>
-        </div>
-    </div>
+
+  <div class="container">
+    <h1>పసుపు లెక్కలు</h1>
     
-    <footer>
-        © 2025 పసుపు లెక్కలు | Designed by Andhe Bhargav Royal
-    </footer>
-    
-    <script>
-        function calculate() {
-            let totalWeight = parseFloat(document.getElementById('totalWeight').value);
-            let pricePerPutti = parseFloat(document.getElementById('pricePerPutti').value);
-            let taruvu = parseFloat(document.getElementById('taruvu').value);
-            
-            if (isNaN(totalWeight) || isNaN(pricePerPutti) || isNaN(taruvu)) {
-                alert("Please enter valid numbers!");
-                return;
-            }
-            
-            let netWeight = totalWeight - taruvu;
-            let fullPutti = Math.floor(netWeight / 300);
-            let remainingWeight = netWeight % 300;
-            let pricePerKg = pricePerPutti / 300;
-            let totalAmount = netWeight * pricePerKg;
-            
-            document.getElementById('displayTotalWeight').textContent = totalWeight;
-            document.getElementById('displayNetWeight').textContent = netWeight;
-            document.getElementById('displayFullPutti').textContent = fullPutti;
-            document.getElementById('displayRemainingWeight').textContent = remainingWeight;
-            document.getElementById('displayPricePerKg').textContent = pricePerKg.toFixed(2);
-            document.getElementById('displayTotalAmount').textContent = totalAmount.toFixed(2);
-            
-            document.getElementById('result').classList.remove('hidden');
-        }
-    </script>
+    <label>Total Weight (in Kgs):</label><br/>
+    <input type="number" id="totalWeight" placeholder="ఉదాహరణకు: 2000"><br/>
+
+    <label>Price for 300 Kgs (1 పుట్టీ):</label><br/>
+    <input type="number" id="pricePerPutti" placeholder="ఉదా: 5000"><br/>
+
+    <label>తరువు (deduction weight):<br/><small>(తరువు లేకపోతే ‘0’ పెట్టండి)</small></label><br/>
+    <input type="number" id="deduction" placeholder="ఉదా: 200"><br/>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="results" id="output"></div>
+  </div>
+
+  <footer>
+    © 2025 పసుపు లెక్కలు | Designed by Andhe Bhargav Royal
+  </footer>
+
+  <script>
+    function calculate() {
+      const totalWeight = parseFloat(document.getElementById('totalWeight').value) || 0;
+      const pricePerPutti = parseFloat(document.getElementById('pricePerPutti').value) || 0;
+      const deduction = parseFloat(document.getElementById('deduction').value) || 0;
+
+      const netWeight = totalWeight - deduction;
+      const fullPutti = Math.floor(netWeight / 300);
+      const remainingWeight = netWeight % 300;
+      const pricePerKg = pricePerPutti / 300;
+      const totalAmount = (netWeight * pricePerKg).toFixed(2);
+
+      document.getElementById('output').innerHTML = `
+  <h2>Calculation Results</h2>
+  <p><strong>Total Weight:</strong> ${totalWeight} Kgs</p>
+  <p><strong>Net Weight(తరువు తొలగించిన తర్వాత):</strong> ${netWeight} Kgs</p>
+  <p><strong>పుట్ట్టీలు & మిగిలిన బరువు:</strong> ${fullPutti} పుట్ట్టీ, ${remainingWeight} కిలోలు</p>
+  <p><strong>Price per Kg:</strong> ₹${pricePerKg.toFixed(2)}</p>
+  <p><strong>Total Amount to be Paid:</strong> ₹${totalAmount}</p>
+`;
+
+    }
+  </script>
+
 </body>
 </html>
